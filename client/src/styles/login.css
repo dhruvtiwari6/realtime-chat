@@ -1,0 +1,41 @@
+input {
+    margin : 1em 3em;
+    border : none;
+    border-bottom: 2px solid black;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+label {
+    font-size: x-large;
+    font-family: cursive;
+
+}
+
+button {
+    margin-top: 1em;
+    font-size: 2em;
+    border-radius: 8px;
+    width : 180px;
+}
+
+input[type="email"] {
+    margin-right : 6em
+}
+
+input[type="checkbox"] {
+    margin-right : 20em
+  }
+
+button {
+    background-color: #0284c7;
+    color: white;
+    border: none    
+}
+
+h1{
+    color :#334155
+}
+
+ 
+  

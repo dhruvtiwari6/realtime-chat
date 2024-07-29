@@ -1,0 +1,71 @@
+.tooltip {
+    position : relative
+}
+
+.tooltip-text {
+    position: absolute;
+    visibility: hidden;
+    top : 1em;
+    color : white;
+    background-color: gray;
+    width : 9em;
+    border-radius: 12px;
+    padding-left  : 10px;
+}
+
+.tooltip:hover .tooltip-text{
+    visibility : visible;
+}
+
+.tooltip:hover {
+    cursor: pointer
+}
+
+.search-icon {
+    color :red;
+    position: relative;
+    top: 2px;
+
+}
+
+
+.sideNav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s ;
+    padding-top: 60px;
+}
+.closeNav {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    cursor: pointer;
+}
+
+.cross-symbol {
+    color : white
+}
+
+.search-user-list {
+    padding-left:2em ;
+    padding-top: 1em
+}
+
+.search-user-list > li {
+    padding-bottom: 5px; /* Adjust based on the thickness of the underline */
+    transition: transform 0.3s ease; /* Smooth scaling transition */
+}
+
+
+.search-user-list > li:hover {
+    transform: scale(1.1); /* Scale the item */
+}
+
+

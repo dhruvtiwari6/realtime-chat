@@ -1,0 +1,23 @@
+.group-chat-button:hover {
+   background-color: #d1d5db;
+}
+
+.group-chat-button { 
+  background-color: #f1f5f9;
+}
+
+.chat-item:hover {
+  background-color: #2dd4bf;
+}
+
+
+.chat-item {
+  background-Color : #fef2f2;
+  margin : 10px 15px;
+  border-radius : 5px;
+  height : 2em;
+  font-size: 24px;
+  padding-left : 12px;
+  font-family: sans-serif;
+
+}
