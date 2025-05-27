@@ -4,7 +4,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { UserContext } from '../pages/userProvider';
 import GroupChatModal from '../pages/GroupChatModel';
-import type { GroupChatModalProps } from '@/GroupChatModel';
+import type { GroupChatModalProps } from '@/interfaces/Page.interface.ts';
 
 const ENDPOINT = "http://localhost:8000";
 let socket: any, selectedChatCompare :any;
