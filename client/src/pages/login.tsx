@@ -53,6 +53,8 @@ export function Login() {
         withCredentials: true,
       });
 
+      console.log("Login successful");
+
       const userExist: any = await axios.get(
         `${apiUrl}/api/chat`,
         { withCredentials: true }
