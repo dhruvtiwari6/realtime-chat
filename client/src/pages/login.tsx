@@ -53,16 +53,16 @@ export function Login() {
         withCredentials: true,
       });
 
-      console.log("Login successful");
+      // console.log("Login successful");
 
-      const userExist: any = await axios.get(
-        `${apiUrl}/api/chat`,
-        { withCredentials: true }
-      );
+      // const userExist: any = await axios.get(
+      //   `${apiUrl}/api/chat`,
+      //   { withCredentials: true }
+      // );
 
-      if (userExist.data.statusCode === 200) {
-        setUserAlreadyExist(true);
-      }
+      // if (userExist.data.statusCode === 200) {
+      //   setUserAlreadyExist(true);
+      // }
 
       navigate("/chat");
     } catch (err: any) {
