@@ -64,7 +64,7 @@ export function Login() {
       //   setUserAlreadyExist(true);
       // }
 
-      navigate("/chat");
+      navigate("/register");
     } catch (err: any) {
       console.error("Login error:", err.response?.data || err);
       setError(err.response?.data?.message || "Incorrect email or password");
