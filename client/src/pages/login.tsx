@@ -49,9 +49,7 @@ export function Login() {
     try {
 
       console.log(`${apiUrl}`);
-      await axios.post(`${apiUrl}/api/users/login`, data, {
-        withCredentials: true,
-      });
+      await axios.post(`${apiUrl}/api/users/login`, data, {withCredentials: true});
 
       // console.log("Login successful");
 
