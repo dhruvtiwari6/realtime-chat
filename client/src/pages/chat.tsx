@@ -14,7 +14,7 @@ export function Chat() {
 
   const fetchChats = async () => {
     try {
-      const res: any = await axios.get(`${apiUrl}api/chat`, {
+      const res: any = await axios.get(`${apiUrl}/api/chat`, {
         withCredentials: true,
       });
       setExistingChats(res.data.data);

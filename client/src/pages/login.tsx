@@ -47,6 +47,8 @@ export function Login() {
     setIsLoading(true);
 
     try {
+
+      console.log(`${apiUrl}`);
       await axios.post(`${apiUrl}/api/users/login`, data, {
         withCredentials: true,
       });
