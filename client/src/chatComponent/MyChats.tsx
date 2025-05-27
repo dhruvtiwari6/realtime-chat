@@ -46,7 +46,7 @@ export const MyChats = ({
       </div>
 
       <div className="flex-1 overflow-y-auto p-2">
-        {existingChats.length > 0 ? (
+        {existingChats?.length > 0 ? (
           existingChats.map((chat :any) => (
             <div
               key={chat._id}
