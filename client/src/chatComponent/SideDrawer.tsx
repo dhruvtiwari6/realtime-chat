@@ -7,6 +7,9 @@ export const SideDrawer = ({ handleFetchAgain } : {handleFetchAgain :any}) => {
   const [users, setUsers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+
   const handleSearch = async () => {
     if (!search.trim()) {
       return;
@@ -14,7 +17,7 @@ export const SideDrawer = ({ handleFetchAgain } : {handleFetchAgain :any}) => {
 
     try {
       const response: any = await axios.get(
-        `http://localhost:8000/api/users?search=${search}`,
+        `${apiUrl}/api/users?search=${search}`,
         { withCredentials: true }
       );
       setUsers(response.data.data);
@@ -26,7 +29,7 @@ export const SideDrawer = ({ handleFetchAgain } : {handleFetchAgain :any}) => {
   const accessChat = async (userId :any) => {
     try {
       await axios.post(
-        `http://localhost:8000/api/chat`,{ chattingUserId: userId },{ withCredentials: true }
+        `${apiUrl}api/chat`,{ chattingUserId: userId },{ withCredentials: true }
       );
       handleFetchAgain();
       setIsOpen(false);

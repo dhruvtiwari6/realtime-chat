@@ -28,6 +28,8 @@ export const MyChats = ({
     setSelectedChats(chat);
   };
 
+  
+
   return (
     <div className="w-80 bg-white rounded-lg shadow-md flex flex-col">
       <div className="p-4 border-b">

@@ -6,7 +6,7 @@ import { UserContext } from '../pages/userProvider';
 import GroupChatModal from '../pages/GroupChatModel';
 import type { GroupChatModalProps } from '@/interfaces/Page.interface.ts';
 
-const ENDPOINT = "http://localhost:8000";
+const apiUrl = import.meta.env.VITE_API_URL;
 let socket: any, selectedChatCompare :any;
 
 const SingleChat = ({
@@ -28,7 +28,7 @@ const SingleChat = ({
   const { User } = context;
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io(apiUrl);
     socket.emit("setup", User);
     socket.on("connection", () => setSocketConnected(true));
   }, []);
@@ -53,7 +53,7 @@ const SingleChat = ({
 
     try {
       const res: any = await axios.get(
-        `http://localhost:8000/api/message/${SelectedChats._id}`,
+        `${apiUrl}/api/message/${SelectedChats._id}`,
         { withCredentials: true }
       );
       setMessages(res.data.data);
@@ -67,7 +67,7 @@ const SingleChat = ({
     if (e.key === "Enter" && !e.shiftKey && newMessage.trim()) {
       try {
         const res :any = await axios.post(
-          'http://localhost:8000/api/message',
+          'https://chat-v1-backend.onrender.com/api/message',
           {
             content: newMessage,
             chatId: SelectedChats._id

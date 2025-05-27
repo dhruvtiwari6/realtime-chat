@@ -19,6 +19,9 @@ export function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+
   const context = useContext(UserContext);
   if (!context) {
     throw new Error("UserContext must be used within a UserProvider");
@@ -47,11 +50,11 @@ export function Register() {
     setIsLoading(true);
 
     try {
-      await axios.post("http://localhost:8000/api/users/register", data);
+      await axios.post(`${apiUrl}/api/users/register`, data);
 
 
       const userExist: any = await axios.get(
-        'http://localhost:8000/api/chat',
+       `${apiUrl}/api/chat`,
         { withCredentials: true }
       );
 

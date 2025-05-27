@@ -2,7 +2,6 @@ import { Link, Outlet } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '../styles/root.css'
 import { UserContext } from "./userProvider.tsx";
 
 import {
@@ -10,6 +9,9 @@ import {
     MenubarMenu,
     MenubarTrigger,
 } from "@/components/ui/menubar"
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 
 export function RootLayout() {
@@ -23,12 +25,12 @@ export function RootLayout() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response: any = await axios.get('http://localhost:8000/api/chat', { withCredentials: true });
+                const response: any = await axios.get(`${apiUrl}/api/chat`, { withCredentials: true });
                 if (response.status === 200) {
                     setUserAlreadyExist(true);
                 }
 
-                const res: any = await axios.get('http://localhost:8000/api/users/getUser', { withCredentials: true });
+                const res: any = await axios.get(`${apiUrl}/api/users/getUser`, { withCredentials: true });
 
                 // const data = res.data.data;
                 console.log("Data ", res.data.data);

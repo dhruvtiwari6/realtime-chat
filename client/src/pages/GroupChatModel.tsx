@@ -10,39 +10,46 @@ const GroupChatModal = ({
   handleFetchAgain,
   setSelectedChats,
   setExistingChats,
-} : GroupChatModalProps) => {
-  const [groupName, setGroupName] = useState("");
-  const [search, setSearch] = useState("");
+}: GroupChatModalProps) => {
+  const [groupName, setGroupName] = useState('');
+  const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error("GroupChatModal must be used within a UserProvider");
+    throw new Error('GroupChatModal must be used within a UserProvider');
   }
   const { User } = context;
 
-  const handleSearch = async (searchTerm :any) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+
+  const handleSearch = async (searchTerm: any) => {
+    setSearch(searchTerm);
     try {
-      const response :any = await axios.get(
-        `http://localhost:8000/api/users?search=${searchTerm}`,
+      const response: any = await axios.get(
+        `${apiUrl}/api/users?search=${searchTerm}`,
         { withCredentials: true }
       );
 
       const filteredUsers = response.data.data.filter(
-        (user :any) => !SelectedChats?.users.some((existingUser :any) => existingUser._id === user._id)
+        (user: any) =>
+          !SelectedChats?.users.some(
+            (existingUser: any) => existingUser._id === user._id
+          )
       );
 
       setSearchResults(filteredUsers);
     } catch (error) {
-      console.error("Error searching users:", error);
+      console.error('Error searching users:', error);
     }
   };
 
-  const handleUserSelect = (user :any) => {
-    setSelectedUsers((prev :any) =>
-      prev.some((u :any) => u._id === user._id)
-        ? prev.filter((u :any) => u._id !== user._id)
+  const handleUserSelect = (user: any) => {
+    setSelectedUsers((prev: any) =>
+      prev.some((u: any) => u._id === user._id)
+        ? prev.filter((u: any) => u._id !== user._id)
         : [...prev, user]
     );
   };
@@ -51,8 +58,8 @@ const GroupChatModal = ({
     if (!groupName.trim()) return;
 
     try {
-      const res :any = await axios.put(
-        "http://localhost:8000/api/chat/groupRename",
+      const res: any = await axios.put(
+        `${apiUrl}/api/chat/groupRename`,
         {
           chatId: SelectedChats._id,
           chatName: groupName,
@@ -61,31 +68,69 @@ const GroupChatModal = ({
       );
 
       setSelectedChats(res.data.data);
-      setExistingChats((chats :any) =>
-        chats.map((chat : any) =>
-          chat._id === SelectedChats._id ? { ...chat, chatName: groupName } : chat
+      setExistingChats((chats: any) =>
+        chats.map((chat: any) =>
+          chat._id === SelectedChats._id
+            ? { ...chat, chatName: groupName }
+            : chat
         )
       );
       handleFetchAgain();
       closeModal();
     } catch (error) {
-      console.error("Error renaming group:", error);
+      console.error('Error renaming group:', error);
     }
   };
 
   const handleLeaveGroup = async () => {
     try {
       await axios.put(
-        "http://localhost:8000/api/chat/groupRemove",
+        `${apiUrl}/api/chat/groupRemove`,
         {
           chatId: SelectedChats._id,
-          userId: User,
+          userId: User._id,
         },
         { withCredentials: true }
       );
       closeModal();
+      handleFetchAgain();
     } catch (error) {
-      console.error("Error leaving group:", error);
+      console.error('Error leaving group:', error);
+    }
+  };
+
+  const handleAddUser = async () => {
+    try {
+      const promises = selectedUsers.map((user: any) =>
+        axios.put(
+          `${apiUrl}/api/chat/groupAdd`,
+          {
+            chatId: SelectedChats._id,
+            userId: user._id,
+          },
+          { withCredentials: true }
+        )
+      );
+
+      await Promise.all(promises);
+
+      // Refetch updated chat
+      const res:any = await axios.get(
+        `${apiUrl}/api/chat/${SelectedChats._id}`,
+        { withCredentials: true }
+      );
+
+      setSelectedChats(res.data.data);
+      setExistingChats((chats: any) =>
+        chats.map((chat: any) =>
+          chat._id === SelectedChats._id ? res.data.data : chat
+        )
+      );
+
+      setSelectedUsers([]);
+      handleFetchAgain();
+    } catch (error) {
+      console.error('Error adding users:', error);
     }
   };
 
@@ -103,6 +148,7 @@ const GroupChatModal = ({
         </div>
 
         <div className="space-y-4">
+          {/* Group Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Group Name
@@ -124,31 +170,28 @@ const GroupChatModal = ({
             </div>
           </div>
 
+          {/* Add Members */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Add Members
             </label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  handleSearch(e.target.value);
-                }}
-                placeholder="Search users"
-                className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Search users"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
           </div>
 
+          {/* Search Results */}
           <div className="max-h-40 overflow-y-auto">
-            {searchResults.map((user :any) => (
+            {searchResults.map((user: any) => (
               <div
                 key={user._id}
                 onClick={() => handleUserSelect(user)}
                 className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer ${
-                  selectedUsers.some((u :any) => u._id === user._id)
+                  selectedUsers.some((u: any) => u._id === user._id)
                     ? 'bg-blue-50'
                     : 'hover:bg-gray-50'
                 }`}
@@ -164,23 +207,33 @@ const GroupChatModal = ({
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {selectedUsers.map((user :any) => (
-              <span
-                key={user._id}
-                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-              >
-                {user.name}
-                <button
-                  onClick={() => handleUserSelect(user)}
-                  className="text-blue-600 hover:text-blue-800"
+          {/* Selected Users Preview */}
+          {selectedUsers.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {selectedUsers.map((user: any) => (
+                <span
+                  key={user._id}
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
                 >
-                  <X size={14} />
-                </button>
-              </span>
-            ))}
-          </div>
+                  {user.name}
+                  <button
+                    onClick={() => handleUserSelect(user)}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    <X size={14} />
+                  </button>
+                </span>
+              ))}
+              <button
+                onClick={handleAddUser}
+                className="ml-auto px-3 py-1 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              >
+                Add
+              </button>
+            </div>
+          )}
 
+          {/* Actions */}
           <div className="flex justify-between pt-4 border-t">
             <button
               onClick={handleLeaveGroup}

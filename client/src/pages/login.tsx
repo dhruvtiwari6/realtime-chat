@@ -9,6 +9,9 @@ interface LoginData {
   password: string;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -44,12 +47,12 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      await axios.post("http://localhost:8000/api/users/login", data, {
+      await axios.post(`${apiUrl}/api/users/login`, data, {
         withCredentials: true,
       });
 
       const userExist: any = await axios.get(
-        "http://localhost:8000/api/chat",
+        `${apiUrl}/api/chat`,
         { withCredentials: true }
       );
 
