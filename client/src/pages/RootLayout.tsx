@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import '../styles/root.css'
@@ -18,7 +18,7 @@ export function RootLayout() {
     if (!context) {
         throw new Error("UserContext must be used within a UserProvider");
     }
-    const { UserAlreadyExist, setUserAlreadyExist, User, setUser } = context;
+    const { UserAlreadyExist, setUserAlreadyExist, setUser } = context;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,15 +54,7 @@ export function RootLayout() {
     }, []);
 
 
-    const handleLogout = async () => {
-        try {
-            await axios.post('http://localhost:8000/api/users/logout', {}, { withCredentials: true });
-            setUserAlreadyExist(false);
-            navigate('/login');
-        } catch (error) {
-            console.log("logout error:", error);
-        }
-    };
+
 
     console.log("UserAlreadyExist : ", UserAlreadyExist);
 

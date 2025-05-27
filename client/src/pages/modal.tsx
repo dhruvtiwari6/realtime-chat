@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/modal.css';
 import axios from 'axios';
-import type { GroupChatModalProps } from './GroupChatModel.tsx';
+import type { GroupChatModalProps } from '@/interfaces/Page.interface.ts';
 
 const Modal = ({ closeModal, setExistingChats } : GroupChatModalProps) => { // Corrected prop destructuring
   const [users, setUsers] = useState([]);

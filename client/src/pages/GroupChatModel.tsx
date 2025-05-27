@@ -1,18 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { X, Search, Users } from 'lucide-react';
+import { useState, useContext } from 'react';
+import { X, Users } from 'lucide-react';
 import axios from 'axios';
 import { UserContext } from './userProvider.tsx';
-
-
-export interface GroupChatModalProps {
-  closeModal: any;
-  SelectedChats: any;
-  handleFetchAgain: any;
-  fetchChats: any;
-  setSelectedChats: any;
-  setExistingChats: any;
-  existingChats: any
-}
+import type { GroupChatModalProps } from '@/interfaces/Page.interface.ts';
 
 const GroupChatModal = ({
   closeModal,
@@ -55,28 +45,6 @@ const GroupChatModal = ({
         ? prev.filter((u :any) => u._id !== user._id)
         : [...prev, user]
     );
-  };
-
-  const handleRemoveUser = async (userId :any) => {
-    try {
-      await axios.put(
-        "http://localhost:8000/api/chat/groupRemove",
-        {
-          chatId: SelectedChats._id,
-          userId,
-        },
-        { withCredentials: true }
-      );
-
-      setSelectedChats((prev :any) => ({
-        ...prev,
-        users: prev.users.filter((user :any) => user._id !== userId),
-      }));
-
-      handleFetchAgain();
-    } catch (error) {
-      console.error("Error removing user:", error);
-    }
   };
 
   const handleRename = async () => {

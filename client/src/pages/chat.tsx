@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SideDrawer } from "../chatComponent/SideDrawer";
 import { MyChats } from "../chatComponent/MyChats";
 import { ChatBox } from "../chatComponent/ChatBox";

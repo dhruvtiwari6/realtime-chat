@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import  { useState, useEffect, useContext } from 'react';
 import { Users, Plus } from 'lucide-react';
 import { UserContext } from '../pages/userProvider';
 import Modal from '../pages/modal';
 
-import type { GroupChatModalProps } from '../pages/GroupChatModel';
+import type { GroupChatModalProps } from '../interfaces/Page.interface';
 
 export const MyChats = ({
   setSelectedChats,

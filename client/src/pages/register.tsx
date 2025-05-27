@@ -49,11 +49,6 @@ export function Register() {
     try {
       await axios.post("http://localhost:8000/api/users/register", data);
 
-      const loginResponse = await axios.post(
-        "http://localhost:8000/api/users/login",
-        { email, password },
-        { withCredentials: true }
-      );
 
       const userExist: any = await axios.get(
         'http://localhost:8000/api/chat',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import  { useEffect, useState, useContext } from 'react';
 import { Send, Settings } from 'lucide-react';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -20,7 +20,7 @@ const SingleChat = ({
   const [showModal, setShowModal] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
-  const [socketConnected, setSocketConnected] = useState(false);
+  const [ , setSocketConnected] = useState(false);
   const context = useContext(UserContext);
   if (!context) {
     throw new Error("SingleChat must be used within a UserProvider");

@@ -1,6 +1,5 @@
-import React from 'react';
 import SingleChat from './singlechat';
-import type { GroupChatModalProps } from '@/GroupChatModel';
+import type { GroupChatModalProps } from '@/interfaces/Page.interface.ts';
 
 export const ChatBox = ({
   SelectedChats,
